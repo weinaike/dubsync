@@ -14,16 +14,15 @@ func newTestSolver() timeline.Solver {
 
 func newTestConfig() timeline.DPConfig {
 	return timeline.DPConfig{
-		TimeStep:      10 * time.Millisecond,
-		RateMin:       1.0,
-		RateMax:       1.4,
-		RateStep:      0.01,
-		WindowLeft:    500 * time.Millisecond,
-		WindowRight:   500 * time.Millisecond,
-		SmoothDelta:   0.15,
-		MinGap:        50 * time.Millisecond,
+		TimeStep:       10 * time.Millisecond,
+		RateMin:        1.0,
+		RateMax:        1.4,
+		RateStep:       0.01,
+		WindowLeft:     500 * time.Millisecond,
+		WindowRight:    500 * time.Millisecond,
+		SmoothDelta:    0.15,
+		MinGap:         50 * time.Millisecond,
 		BreakThreshold: 1500 * time.Millisecond,
-		TopK:          5,
 	}
 }
 
@@ -196,51 +195,7 @@ func TestSolveGreedy_GuaranteeFeasible(t *testing.T) {
 	}
 }
 
-func TestSolveDP_EmptyInput(t *testing.T) {
-	s := newTestSolver()
-	cfg := newTestConfig()
-	weights := newTestWeights()
-
-	sub := &timeline.SubProblem{
-		SourceSegments: []timeline.SourceSegment{},
-		TTSSegments:    []timeline.TTSSegment{},
-	}
-
-	result, err := s.SolveDP(sub, &cfg, &weights, 1000.0)
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
-	if len(result.Segments) != 0 {
-		t.Errorf("Expected 0 segments, got %d", len(result.Segments))
-	}
-}
-
-func TestSolveDP_PerfectMatch(t *testing.T) {
-	s := newTestSolver()
-	cfg := newTestConfig()
-	weights := newTestWeights()
-
-	sub := &timeline.SubProblem{
-		SourceSegments: []timeline.SourceSegment{
-			{Index: 0, Interval: timeline.TimeInterval{Start: 0, End: 1000 * time.Millisecond}},
-		},
-		TTSSegments: []timeline.TTSSegment{
-			{Index: 0, NaturalLen: 800 * time.Millisecond},
-		},
-	}
-
-	result, err := s.SolveDP(sub, &cfg, &weights, 1000.0)
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
-
-	// Should find R=1.0 as optimal
-	if result.Segments[0].Rate != 1.0 {
-		t.Errorf("Expected rate 1.0, got %f", result.Segments[0].Rate)
-	}
-}
-
-func TestSolveDP_RespectsConstraints(t *testing.T) {
+func TestSolveGreedy_RespectsConstraints(t *testing.T) {
 	s := newTestSolver()
 	cfg := newTestConfig()
 	weights := newTestWeights()
@@ -256,7 +211,7 @@ func TestSolveDP_RespectsConstraints(t *testing.T) {
 		},
 	}
 
-	result, err := s.SolveDP(sub, &cfg, &weights, 1000.0)
+	result, err := s.SolveGreedy(sub, &cfg, &weights)
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
