@@ -1,0 +1,14 @@
+name: extreme_compression
+mode: A
+totalDuration: 50000
+segments:
+  - {origStartMs: 1000, origEndMs: 3000, transLenMs: 2650}
+  - {origStartMs: 3300, origEndMs: 5300, transLenMs: 2680}
+  - {origStartMs: 5600, origEndMs: 7600, transLenMs: 2710}
+  - {origStartMs: 7900, origEndMs: 9900, transLenMs: 2740}
+  - {origStartMs: 10200, origEndMs: 12200, transLenMs: 2770}
+  - {origStartMs: 12500, origEndMs: 14500, transLenMs: 2800}
+  - {origStartMs: 14800, origEndMs: 16800, transLenMs: 2830}
+  - {origStartMs: 17100, origEndMs: 19100, transLenMs: 2860}
+  - {origStartMs: 19400, origEndMs: 21400, transLenMs: 2890}
+  - {origStartMs: 21700, origEndMs: 23700, transLenMs: 2920}

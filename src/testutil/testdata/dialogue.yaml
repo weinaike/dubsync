@@ -1,0 +1,12 @@
+name: dialogue
+mode: B
+totalDuration: 30000
+segments:
+  - {origStartMs: 500, origEndMs: 2000, transLenMs: 1800}
+  - {origStartMs: 2100, origEndMs: 4500, transLenMs: 2800}
+  - {origStartMs: 4600, origEndMs: 6200, transLenMs: 2000}
+  - {origStartMs: 6300, origEndMs: 9500, transLenMs: 3500}
+  - {origStartMs: 9600, origEndMs: 11200, transLenMs: 1900}
+  - {origStartMs: 11300, origEndMs: 14000, transLenMs: 3000}
+  - {origStartMs: 14100, origEndMs: 15800, transLenMs: 2100}
+  - {origStartMs: 15900, origEndMs: 19000, transLenMs: 3400}

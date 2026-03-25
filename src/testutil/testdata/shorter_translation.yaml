@@ -1,0 +1,8 @@
+name: shorter_translation
+mode: A
+totalDuration: 30000
+segments:
+  - {origStartMs: 1000, origEndMs: 4000, transLenMs: 2500}
+  - {origStartMs: 4500, origEndMs: 7500, transLenMs: 2200}
+  - {origStartMs: 8000, origEndMs: 11000, transLenMs: 2400}
+  - {origStartMs: 11500, origEndMs: 14500, transLenMs: 2300}

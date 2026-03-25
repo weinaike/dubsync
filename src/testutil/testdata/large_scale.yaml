@@ -1,0 +1,54 @@
+name: large_scale
+mode: B
+totalDuration: 3600000
+segments:
+  - {origStartMs: 1000, origEndMs: 4000, transLenMs: 3200}
+  - {origStartMs: 4500, origEndMs: 8000, transLenMs: 3500}
+  - {origStartMs: 8700, origEndMs: 12500, transLenMs: 3800}
+  - {origStartMs: 13200, origEndMs: 17000, transLenMs: 3200}
+  - {origStartMs: 17700, origEndMs: 21500, transLenMs: 3500}
+  - {origStartMs: 22000, origEndMs: 26000, transLenMs: 4100}
+  - {origStartMs: 26700, origEndMs: 30500, transLenMs: 3500}
+  - {origStartMs: 31000, origEndMs: 35000, transLenMs: 3800}
+  - {origStartMs: 35700, origEndMs: 39500, transLenMs: 3200}
+  - {origStartMs: 40200, origEndMs: 44000, transLenMs: 3500}
+  - {origStartMs: 44500, origEndMs: 48500, transLenMs: 4100}
+  - {origStartMs: 49200, origEndMs: 53000, transLenMs: 3500}
+  - {origStartMs: 53500, origEndMs: 57500, transLenMs: 3800}
+  - {origStartMs: 58200, origEndMs: 62000, transLenMs: 3200}
+  - {origStartMs: 64500, origEndMs: 68500, transLenMs: 3500}
+  - {origStartMs: 69000, origEndMs: 73000, transLenMs: 4100}
+  - {origStartMs: 73700, origEndMs: 77500, transLenMs: 3500}
+  - {origStartMs: 78000, origEndMs: 82000, transLenMs: 3800}
+  - {origStartMs: 82700, origEndMs: 86500, transLenMs: 3200}
+  - {origStartMs: 87200, origEndMs: 91000, transLenMs: 3500}
+  - {origStartMs: 91500, origEndMs: 95500, transLenMs: 4100}
+  - {origStartMs: 96200, origEndMs: 100000, transLenMs: 3500}
+  - {origStartMs: 100500, origEndMs: 104500, transLenMs: 3800}
+  - {origStartMs: 105200, origEndMs: 109000, transLenMs: 3200}
+  - {origStartMs: 109700, origEndMs: 113500, transLenMs: 3500}
+  - {origStartMs: 114000, origEndMs: 118000, transLenMs: 4100}
+  - {origStartMs: 118700, origEndMs: 122500, transLenMs: 3500}
+  - {origStartMs: 123000, origEndMs: 127000, transLenMs: 3800}
+  - {origStartMs: 127700, origEndMs: 131500, transLenMs: 3200}
+  - {origStartMs: 132200, origEndMs: 136000, transLenMs: 3500}
+  - {origStartMs: 138500, origEndMs: 142500, transLenMs: 4100}
+  - {origStartMs: 143000, origEndMs: 147000, transLenMs: 3500}
+  - {origStartMs: 147500, origEndMs: 151500, transLenMs: 3800}
+  - {origStartMs: 152200, origEndMs: 156000, transLenMs: 3200}
+  - {origStartMs: 156700, origEndMs: 160500, transLenMs: 3500}
+  - {origStartMs: 161000, origEndMs: 165000, transLenMs: 4100}
+  - {origStartMs: 165700, origEndMs: 169500, transLenMs: 3500}
+  - {origStartMs: 170000, origEndMs: 174000, transLenMs: 3800}
+  - {origStartMs: 174700, origEndMs: 178500, transLenMs: 3200}
+  - {origStartMs: 179200, origEndMs: 183000, transLenMs: 3500}
+  - {origStartMs: 183500, origEndMs: 187500, transLenMs: 4100}
+  - {origStartMs: 188200, origEndMs: 192000, transLenMs: 3500}
+  - {origStartMs: 192500, origEndMs: 196500, transLenMs: 3800}
+  - {origStartMs: 197200, origEndMs: 201000, transLenMs: 3200}
+  - {origStartMs: 201700, origEndMs: 205500, transLenMs: 3500}
+  - {origStartMs: 208000, origEndMs: 212000, transLenMs: 4100}
+  - {origStartMs: 212500, origEndMs: 216500, transLenMs: 3500}
+  - {origStartMs: 217000, origEndMs: 221000, transLenMs: 3800}
+  - {origStartMs: 221700, origEndMs: 225500, transLenMs: 3200}
+  - {origStartMs: 226200, origEndMs: 230000, transLenMs: 3500}

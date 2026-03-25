@@ -1,0 +1,16 @@
+name: news_broadcast
+mode: A
+totalDuration: 35000
+segments:
+  - {origStartMs: 500, origEndMs: 2500, transLenMs: 2400}
+  - {origStartMs: 2800, origEndMs: 5000, transLenMs: 2600}
+  - {origStartMs: 5300, origEndMs: 7800, transLenMs: 2900}
+  - {origStartMs: 8100, origEndMs: 10500, transLenMs: 2800}
+  - {origStartMs: 10800, origEndMs: 12500, transLenMs: 2100}
+  - {origStartMs: 12800, origEndMs: 15500, transLenMs: 3200}
+  - {origStartMs: 15800, origEndMs: 18200, transLenMs: 2900}
+  - {origStartMs: 18500, origEndMs: 21200, transLenMs: 3100}
+  - {origStartMs: 21500, origEndMs: 24800, transLenMs: 3700}
+  - {origStartMs: 25100, origEndMs: 27500, transLenMs: 2800}
+  - {origStartMs: 27800, origEndMs: 30000, transLenMs: 2600}
+  - {origStartMs: 30300, origEndMs: 32500, transLenMs: 2500}

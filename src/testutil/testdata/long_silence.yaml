@@ -1,0 +1,8 @@
+name: long_silence
+mode: B
+totalDuration: 60000
+segments:
+  - {origStartMs: 1000, origEndMs: 4000, transLenMs: 3500}
+  - {origStartMs: 9000, origEndMs: 12000, transLenMs: 3200}
+  - {origStartMs: 20000, origEndMs: 23000, transLenMs: 3400}
+  - {origStartMs: 29000, origEndMs: 32000, transLenMs: 3300}

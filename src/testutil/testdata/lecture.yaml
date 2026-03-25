@@ -1,0 +1,19 @@
+name: lecture
+mode: B
+totalDuration: 300000
+segments:
+  - {origStartMs: 500, origEndMs: 4500, transLenMs: 4200}
+  - {origStartMs: 4800, origEndMs: 9500, transLenMs: 4700}
+  - {origStartMs: 10000, origEndMs: 15000, transLenMs: 4900}
+  - {origStartMs: 15500, origEndMs: 20500, transLenMs: 4200}
+  - {origStartMs: 21000, origEndMs: 26000, transLenMs: 4700}
+  - {origStartMs: 26500, origEndMs: 31500, transLenMs: 5400}
+  - {origStartMs: 32000, origEndMs: 37000, transLenMs: 4700}
+  - {origStartMs: 37500, origEndMs: 42500, transLenMs: 4900}
+  - {origStartMs: 43000, origEndMs: 48000, transLenMs: 4200}
+  - {origStartMs: 48500, origEndMs: 53500, transLenMs: 4700}
+  - {origStartMs: 54000, origEndMs: 59000, transLenMs: 5400}
+  - {origStartMs: 59500, origEndMs: 64500, transLenMs: 4700}
+  - {origStartMs: 65000, origEndMs: 70000, transLenMs: 4900}
+  - {origStartMs: 70500, origEndMs: 75500, transLenMs: 4200}
+  - {origStartMs: 76000, origEndMs: 81000, transLenMs: 4700}

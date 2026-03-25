@@ -1,0 +1,24 @@
+name: dense_packing
+mode: A
+totalDuration: 90000
+segments:
+  - {origStartMs: 0, origEndMs: 2000, transLenMs: 2300}
+  - {origStartMs: 2100, origEndMs: 4100, transLenMs: 2400}
+  - {origStartMs: 4200, origEndMs: 6200, transLenMs: 2500}
+  - {origStartMs: 6300, origEndMs: 8300, transLenMs: 2300}
+  - {origStartMs: 8400, origEndMs: 10400, transLenMs: 2400}
+  - {origStartMs: 10500, origEndMs: 12500, transLenMs: 2500}
+  - {origStartMs: 12600, origEndMs: 14600, transLenMs: 2300}
+  - {origStartMs: 14700, origEndMs: 16700, transLenMs: 2400}
+  - {origStartMs: 16800, origEndMs: 18800, transLenMs: 2500}
+  - {origStartMs: 18900, origEndMs: 20900, transLenMs: 2300}
+  - {origStartMs: 21000, origEndMs: 23000, transLenMs: 2400}
+  - {origStartMs: 23100, origEndMs: 25100, transLenMs: 2500}
+  - {origStartMs: 25200, origEndMs: 27200, transLenMs: 2300}
+  - {origStartMs: 27300, origEndMs: 29300, transLenMs: 2400}
+  - {origStartMs: 29400, origEndMs: 31400, transLenMs: 2500}
+  - {origStartMs: 31500, origEndMs: 33500, transLenMs: 2300}
+  - {origStartMs: 33600, origEndMs: 35600, transLenMs: 2400}
+  - {origStartMs: 35700, origEndMs: 37700, transLenMs: 2500}
+  - {origStartMs: 37800, origEndMs: 39800, transLenMs: 2300}
+  - {origStartMs: 39900, origEndMs: 41900, transLenMs: 2400}

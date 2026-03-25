@@ -1,0 +1,7 @@
+name: single_segment
+mode: A
+totalDuration: 10000
+segments:
+  - origStartMs: 2000
+    origEndMs: 5000
+    transLenMs: 3200

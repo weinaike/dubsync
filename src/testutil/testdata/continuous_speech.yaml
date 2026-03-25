@@ -1,0 +1,9 @@
+name: continuous_speech
+mode: A
+totalDuration: 30000
+segments:
+  - {origStartMs: 1000, origEndMs: 3500, transLenMs: 3000}
+  - {origStartMs: 3520, origEndMs: 6000, transLenMs: 2800}
+  - {origStartMs: 6030, origEndMs: 8500, transLenMs: 2700}
+  - {origStartMs: 8540, origEndMs: 11000, transLenMs: 2900}
+  - {origStartMs: 11010, origEndMs: 13500, transLenMs: 2800}

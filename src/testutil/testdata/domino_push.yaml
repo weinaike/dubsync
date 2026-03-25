@@ -1,0 +1,19 @@
+name: domino_push_podcast
+mode: B
+totalDuration: 60000
+segments:
+  - origStartMs: 1000
+    origEndMs: 3000
+    transLenMs: 4000
+  - origStartMs: 3500
+    origEndMs: 5500
+    transLenMs: 3500
+  - origStartMs: 6000
+    origEndMs: 8000
+    transLenMs: 4200
+  - origStartMs: 8500
+    origEndMs: 10500
+    transLenMs: 3800
+  - origStartMs: 11000
+    origEndMs: 13000
+    transLenMs: 4000

@@ -1,0 +1,24 @@
+name: interview
+mode: B
+totalDuration: 180000
+segments:
+  - {origStartMs: 500, origEndMs: 2000, transLenMs: 1400}
+  - {origStartMs: 2200, origEndMs: 6500, transLenMs: 4200}
+  - {origStartMs: 6700, origEndMs: 8500, transLenMs: 1700}
+  - {origStartMs: 8700, origEndMs: 13500, transLenMs: 5000}
+  - {origStartMs: 13700, origEndMs: 15500, transLenMs: 1600}
+  - {origStartMs: 15700, origEndMs: 21000, transLenMs: 5800}
+  - {origStartMs: 21200, origEndMs: 23000, transLenMs: 1500}
+  - {origStartMs: 23200, origEndMs: 28000, transLenMs: 5400}
+  - {origStartMs: 28200, origEndMs: 30000, transLenMs: 1400}
+  - {origStartMs: 30200, origEndMs: 35500, transLenMs: 6200}
+  - {origStartMs: 35700, origEndMs: 37500, transLenMs: 1600}
+  - {origStartMs: 37700, origEndMs: 43000, transLenMs: 5800}
+  - {origStartMs: 43200, origEndMs: 45000, transLenMs: 1500}
+  - {origStartMs: 45200, origEndMs: 50500, transLenMs: 6000}
+  - {origStartMs: 50700, origEndMs: 52500, transLenMs: 1400}
+  - {origStartMs: 52700, origEndMs: 58000, transLenMs: 5400}
+  - {origStartMs: 58200, origEndMs: 60000, transLenMs: 1700}
+  - {origStartMs: 60200, origEndMs: 65500, transLenMs: 6200}
+  - {origStartMs: 65700, origEndMs: 67500, transLenMs: 1600}
+  - {origStartMs: 67700, origEndMs: 73000, transLenMs: 5800}
