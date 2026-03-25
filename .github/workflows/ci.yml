@@ -1,0 +1,290 @@
+# Timeline CI Pipeline
+# ====================
+# Runs tests, coverage, benchmarks, and generates reports
+# Triggers: push to main/develop, pull requests to main
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  GO_VERSION: '1.22'
+
+jobs:
+  # ===========================================
+  # Lint and Format Check
+  # ===========================================
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
+
+      - name: Check formatting
+        run: |
+          if [ -n "$(gofmt -l .)" ]; then
+            echo "Code is not formatted. Run 'go fmt ./...'"
+            gofmt -l .
+            exit 1
+          fi
+
+  # ===========================================
+  # Unit Tests with Coverage
+  # ===========================================
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    needs: lint
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: true
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Run tests with coverage
+        run: |
+          mkdir -p test-reports
+          go test -v -race -coverprofile=test-reports/coverage.out -covermode=atomic ./...
+          go tool cover -func=test-reports/coverage.out > test-reports/coverage.txt
+
+      - name: Generate test reports
+        run: |
+          chmod +x run_tests.sh
+          ./run_tests.sh -f all -c -o test-reports
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          files: test-reports/coverage.out
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ matrix.os }}
+          path: test-reports/
+          retention-days: 30
+
+  # ===========================================
+  # Integration Tests
+  # ===========================================
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run integration tests
+        run: go test -v -run "Integration|E2E" -timeout 10m ./...
+
+  # ===========================================
+  # Benchmarks
+  # ===========================================
+  benchmark:
+    name: Benchmarks
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run solver benchmarks
+        run: |
+          echo "=== Solver Benchmarks ===" > benchmark-results.txt
+          go test -bench=. -benchmem -benchtime=2s ./src/solver/... >> benchmark-results.txt
+          echo "" >> benchmark-results.txt
+
+          echo "=== Scheduler Benchmarks ===" >> benchmark-results.txt
+          go test -bench=. -benchmem -benchtime=2s ./src/scheduler/... >> benchmark-results.txt
+          echo "" >> benchmark-results.txt
+
+          echo "=== Penalty Calculator Benchmarks ===" >> benchmark-results.txt
+          go test -bench=. -benchmem -benchtime=2s ./src/penalty/... >> benchmark-results.txt
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark-results.txt
+          retention-days: 90
+
+  # ===========================================
+  # Coverage Check
+  # ===========================================
+  coverage-check:
+    name: Coverage Check
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: test-reports-ubuntu-latest
+          path: test-reports/
+
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(go tool cover -func=test-reports/coverage.out | grep "total:" | awk '{print $3}' | tr -d '%')
+          echo "Total coverage: ${COVERAGE}%"
+
+          # Set status based on coverage
+          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+            echo "::error::Coverage ${COVERAGE}% is below minimum threshold of 70%"
+            exit 1
+          elif (( $(echo "$COVERAGE >= 80" | bc -l) )); then
+            echo "::notice::Excellent coverage! ${COVERAGE}% exceeds 80%"
+          else
+            echo "::warning::Coverage ${COVERAGE}% meets minimum but could be improved"
+          fi
+
+      - name: Create coverage badge
+        run: |
+          COVERAGE=$(go tool cover -func=test-reports/coverage.out | grep "total:" | awk '{print $3}' | tr -d '%')
+
+          # Determine color
+          if (( $(echo "$COVERAGE >= 80" | bc -l) )); then
+            COLOR="brightgreen"
+          elif (( $(echo "$COVERAGE >= 70" | bc -l) )); then
+            COLOR="yellow"
+          else
+            COLOR="red"
+          fi
+
+          # Create badge JSON
+          mkdir -p .github/badges
+          cat > .github/badges/coverage.json << EOF
+          {
+            "schemaVersion": 1,
+            "label": "coverage",
+            "message": "${COVERAGE}%",
+            "color": "${COLOR}"
+          }
+          EOF
+
+      - name: Upload coverage badge
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-badge
+          path: .github/badges/
+          retention-days: 30
+
+  # ===========================================
+  # Archive Reports
+  # ===========================================
+  archive:
+    name: Archive Reports
+    runs-on: ubuntu-latest
+    needs: [test, benchmark]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Archive to date-based folder
+        run: |
+          ARCHIVE_DIR="test-reports/archive/$(date +%Y-%m-%d)"
+          mkdir -p "$ARCHIVE_DIR"
+
+          # Copy test reports
+          if [ -d "artifacts/test-reports-ubuntu-latest" ]; then
+            cp -r artifacts/test-reports-ubuntu-latest/* "$ARCHIVE_DIR/"
+          fi
+
+          # Copy benchmark results
+          if [ -f "artifacts/benchmark-results/benchmark-results.txt" ]; then
+            mkdir -p "$ARCHIVE_DIR/benchmarks"
+            cp artifacts/benchmark-results/benchmark-results.txt "$ARCHIVE_DIR/benchmarks/"
+          fi
+
+          echo "Reports archived to $ARCHIVE_DIR"
+          ls -la "$ARCHIVE_DIR/"
+
+      - name: Commit archive
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add test-reports/archive/ || echo "No changes to commit"
+          git commit -m "Archive test reports [skip ci]" || echo "No changes to commit"
+          git push
+
+  # ===========================================
+  # Summary
+  # ===========================================
+  summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [test, benchmark, coverage-check]
+    if: always()
+
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## CI Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **All checks passed**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Lint | ${{ needs.lint.result == 'success' && '✅' || ${{ needs.lint.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Tests (Ubuntu) | ${{ needs.test.result == 'success' && '✅' || ${{ needs.test.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Tests (macOS) | ${{ needs.test.result == 'success' && '✅' || ${{ needs.test.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Tests (Windows) | ${{ needs.test.result == 'success' && '✅' || ${{ needs.test.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Integration | ${{ needs.integration.result == 'success' && '✅' || ${{ needs.integration.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Benchmarks | ${{ needs.benchmark.result == 'success' && '✅' || ${{ needs.benchmark.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Coverage | ${{ needs.coverage-check.result == 'success' && '✅' || ${{ needs.coverage-check.result == 'skipped' && '⏭️' || '❌' }}" >> $GITHUB_STEP_SUMMARY
