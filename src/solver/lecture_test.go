@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	timeline "github.com/wnk/timeline/src"
-	"github.com/wnk/timeline/src/penalty"
+	timeline "github.com/weinaike/timeline/src"
+	"github.com/weinaike/timeline/src/penalty"
 )
 
 // TestLectureScenario_ModeB 重现用户提供的 lecture (Mode B) 案例

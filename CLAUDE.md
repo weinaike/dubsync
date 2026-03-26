@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Installation
+
+```bash
+go get github.com/weinaike/timeline
+```
+
 ## Build and Test Commands
 
 ```bash
@@ -30,8 +36,7 @@ This is an **audio translation timeline scheduling system** that schedules TTS-g
 
 ```
 Input (SourceSegments + TTSSegments)
-    → Splitter (decompose at natural breakpoints)
-    → Solver (Greedy → DP optimization)
+    → Solver (Greedy algorithm - optimal for chain-constrained problems)
     → DegradationHandler (fallback if infeasible)
     → Blueprint (scheduling result)
 ```
@@ -41,8 +46,7 @@ Input (SourceSegments + TTSSegments)
 | Component | Interface | Implementation | Purpose |
 |-----------|-----------|----------------|---------|
 | **Scheduler** | `src/scheduler.go` | `scheduler/impl.go` | Orchestrates the full pipeline |
-| **Splitter** | `src/splitter.go` | `splitter/impl.go` | Splits problems at gaps ≥ 1.5s |
-| **Solver** | `src/solver.go` | `solver/impl.go` | Two-phase solving (Greedy + DP) |
+| **Solver** | `src/solver.go` | `solver/impl.go` | Greedy algorithm (optimal for chain-constrained problems) |
 | **PenaltyCalculator** | `src/penalty.go` | `penalty/impl.go` | Computes objective function penalties |
 | **DegradationHandler** | `src/degradation.go` | `degradation/impl.go` | Three-tier fallback strategy |
 
@@ -118,3 +122,9 @@ Pre-built scenarios: `PerfectMatch()`, `NeedSpeedChange()`, `NeedShift()`, `Domi
 ## Full Algorithm Specification
 
 See `docs/algorithm.md` for the complete mathematical formulation and algorithm design rationale.
+
+## Module
+
+```
+github.com/weinaike/timeline
+```

@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/wnk/timeline/src"
+	"github.com/weinaike/timeline/src"
 )
 
 // AssertBlueprintValid 验证蓝图基本有效性

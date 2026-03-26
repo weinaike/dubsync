@@ -3,7 +3,7 @@ package solver
 import (
 	"math"
 
-	timeline "github.com/wnk/timeline/src"
+	timeline "github.com/weinaike/timeline/src"
 )
 
 // smoothRates performs a post-processing pass on greedy results to optimize

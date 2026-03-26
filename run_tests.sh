@@ -417,7 +417,7 @@ generate_html_report() {
 
         <div class="footer">
             Timeline Test Execution System |
-            <a href="https://github.com/wnk/timeline">View Project</a>
+            <a href="https://github.com/weinaike/timeline">View Project</a>
         </div>
     </div>
 </body>

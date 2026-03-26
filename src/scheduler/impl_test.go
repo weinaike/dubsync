@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	timeline "github.com/wnk/timeline/src"
+	timeline "github.com/weinaike/timeline/src"
 )
 
 func newTestSchedulerConfig(mode timeline.Mode) timeline.SchedulerConfig {

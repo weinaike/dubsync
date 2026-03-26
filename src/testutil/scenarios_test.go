@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	timeline "github.com/wnk/timeline/src"
-	"github.com/wnk/timeline/src/scheduler"
+	timeline "github.com/weinaike/timeline/src"
+	"github.com/weinaike/timeline/src/scheduler"
 	"gopkg.in/yaml.v3"
 )
 

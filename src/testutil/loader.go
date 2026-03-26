@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wnk/timeline/src"
+	"github.com/weinaike/timeline/src"
 	"gopkg.in/yaml.v3"
 )
 

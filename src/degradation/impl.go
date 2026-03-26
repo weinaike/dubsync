@@ -3,7 +3,7 @@ package degradation
 import (
 	"fmt"
 
-	timeline "github.com/wnk/timeline/src"
+	timeline "github.com/weinaike/timeline/src"
 )
 
 // degradationHandlerImpl implements the DegradationHandler interface

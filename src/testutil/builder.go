@@ -3,7 +3,7 @@ package testutil
 import (
 	"time"
 
-	"github.com/wnk/timeline/src"
+	"github.com/weinaike/timeline/src"
 )
 
 // TestDataBuilder 测试数据构建器

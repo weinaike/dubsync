@@ -1,4 +1,4 @@
-module github.com/wnk/timeline
+module github.com/weinaike/timeline
 
 go 1.22.2
 

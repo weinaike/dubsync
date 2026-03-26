@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	timeline "github.com/wnk/timeline/src"
-	"github.com/wnk/timeline/src/penalty"
+	timeline "github.com/weinaike/timeline/src"
+	"github.com/weinaike/timeline/src/penalty"
 )
 
 func newSmoothTestSolver() *solverImpl {
