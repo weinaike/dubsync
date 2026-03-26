@@ -129,12 +129,13 @@ func TestSolveGreedy_PerfectMatch(t *testing.T) {
 	}
 }
 
-func TestSolveGreedy_NeedsSpeedChange(t *testing.T) {
+func TestSolveGreedy_SingleSegmentExtends(t *testing.T) {
 	s := newTestSolver()
 	cfg := newTestConfig()
 	weights := newTestWeights()
 
-	// TTS audio is longer than original, needs compression
+	// Single segment with TTS longer than original slot
+	// Since it's the last (and only) segment, Rate=1.0 is optimal (no downstream constraint)
 	sub := &timeline.SubProblem{
 		SourceSegments: []timeline.SourceSegment{
 			{Index: 0, Interval: timeline.TimeInterval{Start: 0, End: 1000 * time.Millisecond}},
@@ -149,9 +150,53 @@ func TestSolveGreedy_NeedsSpeedChange(t *testing.T) {
 		t.Fatalf("Unexpected error: %v", err)
 	}
 
-	// Should use rate > 1.0 to fit in window
+	// Single segment can extend beyond original slot - Rate=1.0 is optimal
+	if result.Segments[0].Rate != 1.0 {
+		t.Errorf("Expected rate 1.0 for last segment, got %f", result.Segments[0].Rate)
+	}
+	// Should start at window min (0)
+	if result.Segments[0].StartTime != 0 {
+		t.Errorf("Expected StartTime 0, got %v", result.Segments[0].StartTime)
+	}
+	// Duration should match TTS natural length
+	if result.Segments[0].PlayDuration != 1200*time.Millisecond {
+		t.Errorf("Expected PlayDuration 1200ms, got %v", result.Segments[0].PlayDuration)
+	}
+}
+
+func TestSolveGreedy_NeedsSpeedChange(t *testing.T) {
+	s := newTestSolver()
+	cfg := newTestConfig()
+	weights := newTestWeights()
+
+	// Dense scenario: first segment must compress to fit before next segment's window
+	// Segment 0: slot 0-1000ms, TTS=1200ms
+	// Segment 1: slot 1100-2100ms, TTS=1000ms
+	// Segment 0 can only use 1100-500-50 = 550ms max (due to segment 1's window)
+	// So segment 0 must compress: rate = 1200/550 = 2.18, capped at RateMax=1.3
+	sub := &timeline.SubProblem{
+		SourceSegments: []timeline.SourceSegment{
+			{Index: 0, Interval: timeline.TimeInterval{Start: 0, End: 1000 * time.Millisecond}},
+			{Index: 1, Interval: timeline.TimeInterval{Start: 1100 * time.Millisecond, End: 2100 * time.Millisecond}},
+		},
+		TTSSegments: []timeline.TTSSegment{
+			{Index: 0, NaturalLen: 1200 * time.Millisecond}, // 20% longer, needs compression
+			{Index: 1, NaturalLen: 1000 * time.Millisecond},
+		},
+	}
+
+	result, err := s.SolveGreedy(sub, &cfg, &weights)
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+
+	// Segment 0 needs compression because segment 1's window restricts available time
+	// Segment 1 can start at earliest: 1100 - 500 = 600ms
+	// So segment 0 must end by: 600 - 50 = 550ms
+	// Available time for segment 0: 550ms
+	// TTS: 1200ms, so rate = 1200/550 = 2.18, but capped at RateMax=1.3
 	if result.Segments[0].Rate <= 1.0 {
-		t.Errorf("Expected rate > 1.0, got %f", result.Segments[0].Rate)
+		t.Errorf("Expected rate > 1.0 for segment 0, got %f", result.Segments[0].Rate)
 	}
 }
 

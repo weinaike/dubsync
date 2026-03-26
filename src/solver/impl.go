@@ -102,16 +102,10 @@ func (s *solverImpl) SolveGreedy(
 					}
 				}
 			} else {
-				// Last segment
-				// For Mode A (narrow window), compress to fit in slot
-				// For Mode B (wide window), allow extending
-				if !isWideWindow {
-					// Mode A: Fit in original slot via compression
-					availableTime = slotDuration
-				} else {
-					// Mode B: Can extend beyond original slot
-					availableTime = maxDuration(slotDuration, tts.NaturalLen)
-				}
+				// Last segment: no downstream constraint
+				// Can play at natural length as long as startTime is within window
+				// (which is already guaranteed by minStartTime calculation)
+				availableTime = tts.NaturalLen
 			}
 
 			// Calculate required rate
@@ -172,4 +166,43 @@ func maxDuration(a, b timeline.Duration) timeline.Duration {
 		return a
 	}
 	return b
+}
+
+// SolveGreedySmooth runs the greedy solver followed by rate smoothing post-processing.
+// This reduces unnecessary rate jumps and distributes compression more evenly.
+func (s *solverImpl) SolveGreedySmooth(
+	sub *timeline.SubProblem,
+	cfg *timeline.DPConfig,
+	weights *timeline.PenaltyWeights,
+) (*timeline.Blueprint, error) {
+	// Phase 1: Run standard greedy
+	result, err := s.SolveGreedy(sub, cfg, weights)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(result.Segments) <= 1 {
+		return result, nil
+	}
+
+	// Early exit: if greedy already found perfect solution (all rates = 1.0),
+	// skip smoothing to preserve the optimal result and avoid unnecessary rate changes.
+	if s.allRatesAreOne(result.Segments) {
+		return result, nil
+	}
+
+	// Phase 2: Apply rate smoothing post-processing
+	result.Segments = s.smoothRates(result.Segments, sub, cfg, weights)
+
+	return result, nil
+}
+
+// allRatesAreOne checks if all segments have rate exactly 1.0
+func (s *solverImpl) allRatesAreOne(plans []timeline.SegmentPlan) bool {
+	for _, p := range plans {
+		if p.Rate < 1.0-1e-6 || p.Rate > 1.0+1e-6 {
+			return false
+		}
+	}
+	return true
 }
