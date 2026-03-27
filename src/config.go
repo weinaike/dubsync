@@ -3,8 +3,8 @@ package timeline
 import "time"
 
 // NewDefaultConfig 根据模式创建默认调度器配置
-func NewDefaultConfig(mode Mode) *SchedulerConfig {
-	return &SchedulerConfig{
+func NewDefaultConfig(mode Mode) SchedulerConfig {
+	return SchedulerConfig{
 		Mode:           mode,
 		Weights:        NewDefaultPenaltyWeights(mode),
 		DP:             NewDefaultDPConfig(mode),

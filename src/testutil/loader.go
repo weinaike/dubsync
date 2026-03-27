@@ -148,6 +148,6 @@ func fileConfigToInput(config *FileTestConfig) (*timeline.PipelineInput, error) 
 	return &timeline.PipelineInput{
 		SourceSegments: sources,
 		TTSSegments:    tts,
-		Config:         *cfg,
+		Config:         cfg,
 	}, nil
 }

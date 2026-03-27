@@ -63,8 +63,8 @@ func (b *TestDataBuilder) AddSegment(origStart, origEnd, transLen time.Duration)
 }
 
 // Config 设置自定义配置
-func (b *TestDataBuilder) Config(cfg *timeline.SchedulerConfig) *TestDataBuilder {
-	b.config = cfg
+func (b *TestDataBuilder) Config(cfg timeline.SchedulerConfig) *TestDataBuilder {
+	b.config = &cfg
 	return b
 }
 
@@ -88,17 +88,18 @@ func (b *TestDataBuilder) Build() *timeline.PipelineInput {
 		}
 	}
 
-	cfg := b.config
-	if cfg == nil {
-		defaultCfg := timeline.NewDefaultConfig(b.mode)
-		defaultCfg.TotalDuration = b.totalDur
-		cfg = defaultCfg
+	var cfg timeline.SchedulerConfig
+	if b.config != nil {
+		cfg = *b.config
+	} else {
+		cfg = timeline.NewDefaultConfig(b.mode)
+		cfg.TotalDuration = b.totalDur
 	}
 
 	return &timeline.PipelineInput{
 		SourceSegments: sources,
 		TTSSegments:    tts,
-		Config:         *cfg,
+		Config:         cfg,
 	}
 }
 
