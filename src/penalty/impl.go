@@ -1,7 +1,7 @@
 package penalty
 
 import (
-	timeline "github.com/weinaike/timeline/src"
+	timeline "github.com/weinaike/dubsync/src"
 )
 
 // penaltyCalculatorImpl implements the PenaltyCalculator interface

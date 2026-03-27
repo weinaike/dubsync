@@ -3,7 +3,7 @@ package solver
 import (
 	"time"
 
-	timeline "github.com/weinaike/timeline/src"
+	timeline "github.com/weinaike/dubsync/src"
 )
 
 // solverImpl implements the Solver interface

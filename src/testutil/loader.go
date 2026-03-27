@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/weinaike/timeline/src"
+	"github.com/weinaike/dubsync/src"
 	"gopkg.in/yaml.v3"
 )
 

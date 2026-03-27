@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	timeline "github.com/weinaike/timeline/src"
+	timeline "github.com/weinaike/dubsync/src"
 )
 
 func TestLoadYAMLFiles(t *testing.T) {

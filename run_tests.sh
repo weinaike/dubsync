@@ -416,8 +416,8 @@ generate_html_report() {
         </div>
 
         <div class="footer">
-            Timeline Test Execution System |
-            <a href="https://github.com/weinaike/timeline">View Project</a>
+            Dubsync Test Execution System |
+            <a href="https://github.com/weinaike/dubsync">View Project</a>
         </div>
     </div>
 </body>

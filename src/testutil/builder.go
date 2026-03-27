@@ -3,7 +3,7 @@ package testutil
 import (
 	"time"
 
-	"github.com/weinaike/timeline/src"
+	"github.com/weinaike/dubsync/src"
 )
 
 // TestDataBuilder 测试数据构建器

@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Installation
 
 ```bash
-go get github.com/weinaike/timeline
+go get github.com/weinaike/dubsync
 ```
 
 ## Build and Test Commands
@@ -126,5 +126,5 @@ See `docs/algorithm.md` for the complete mathematical formulation and algorithm 
 ## Module
 
 ```
-github.com/weinaike/timeline
+github.com/weinaike/dubsync
 ```

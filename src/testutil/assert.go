@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/weinaike/timeline/src"
+	"github.com/weinaike/dubsync/src"
 )
 
 // AssertBlueprintValid 验证蓝图基本有效性

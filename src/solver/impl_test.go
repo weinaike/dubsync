@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	timeline "github.com/weinaike/timeline/src"
-	"github.com/weinaike/timeline/src/penalty"
+	timeline "github.com/weinaike/dubsync/src"
+	"github.com/weinaike/dubsync/src/penalty"
 )
 
 func newTestSolver() timeline.Solver {

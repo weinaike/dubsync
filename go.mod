@@ -1,4 +1,4 @@
-module github.com/weinaike/timeline
+module github.com/weinaike/dubsync
 
 go 1.22.2
 

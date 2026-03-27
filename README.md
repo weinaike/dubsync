@@ -1,7 +1,7 @@
-# Timeline
+# Dubsync
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/weinaike/timeline.svg)](https://pkg.go.dev/github.com/weinaike/timeline)
-[![Go Report Card](https://goreportcard.com/badge/github.com/weinaike/timeline)](https://goreportcard.com/report/github.com/weinaike/timeline)
+[![Go Reference](https://pkg.go.dev/badge/github.com/weinaike/dubsync.svg)](https://pkg.go.dev/github.com/weinaike/dubsync)
+[![Go Report Card](https://goreportcard.com/badge/github.com/weinaike/dubsync)](https://goreportcard.com/report/github.com/weinaike/dubsync)
 
 A Go library for **audio translation timeline scheduling** - schedules TTS-generated translated audio segments onto an original timeline while balancing audio compression/stretching with temporal displacement.
 
@@ -32,7 +32,7 @@ The algorithm uses a **greedy approach** that is mathematically proven optimal f
 ## Installation
 
 ```bash
-go get github.com/weinaike/timeline
+go get github.com/weinaike/dubsync
 ```
 
 ## Quick Start
@@ -44,8 +44,8 @@ import (
     "fmt"
     "time"
 
-    timeline "github.com/weinaike/timeline/src"
-    "github.com/weinaike/timeline/src/scheduler"
+    timeline "github.com/weinaike/dubsync/src"
+    "github.com/weinaike/dubsync/src/scheduler"
 )
 
 func main() {

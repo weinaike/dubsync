@@ -3,10 +3,10 @@ package scheduler
 import (
 	"fmt"
 
-	timeline "github.com/weinaike/timeline/src"
-	"github.com/weinaike/timeline/src/degradation"
-	"github.com/weinaike/timeline/src/penalty"
-	"github.com/weinaike/timeline/src/solver"
+	timeline "github.com/weinaike/dubsync/src"
+	"github.com/weinaike/dubsync/src/degradation"
+	"github.com/weinaike/dubsync/src/penalty"
+	"github.com/weinaike/dubsync/src/solver"
 )
 
 // schedulerImpl implements the Scheduler interface

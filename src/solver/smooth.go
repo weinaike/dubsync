@@ -3,7 +3,7 @@ package solver
 import (
 	"math"
 
-	timeline "github.com/weinaike/timeline/src"
+	timeline "github.com/weinaike/dubsync/src"
 )
 
 // smoothRates performs a post-processing pass on greedy results to optimize
